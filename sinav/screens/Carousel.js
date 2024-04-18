@@ -11,6 +11,7 @@ import {SafeAreaView} from 'react-native';
 import Carousel, {Pagination} from 'react-native-snap-carousel';
 import Login from './Login';
 import SingUp from './SingUp';
+import Kvkk from './Kvkk';
 
 const Carouselt = () => {
 
@@ -22,7 +23,7 @@ const Carouselt = () => {
   const data = [
     {
       id: 0,
-      title: 'Login',
+      
       description:(
         
         <Login/>
@@ -32,31 +33,25 @@ const Carouselt = () => {
     },
     {
       id: 1,
-      title: 'Pay Seamlessly',
+      
       description:
         <SingUp/>,
     },
     {
       id: 2,
-      title: 'Track Order',
+      
       description: 
-      <SingUp/>,
+      <Kvkk/>,
     },
-    {
-        id: 3,
-        title: 'Başka işler',
-        description: 
-        <SingUp/>,
-      },
+   
   ];
 
   const _renderItem = ({item, index}) => {
     return (
       <View >
         
-        <View className='bg-white mt-48 h-[80%] rounded-t-3xl' >
-          <Text style={{fontSize: 18, fontWeight: '700'}}>{item.title}</Text>
-          <View className='w-full'>{item.description}</View>
+        <View className='bg-[#ffffffd0] mt-48 h-[80%] rounded-t-3xl' >
+          <View  className='w-full'>{item.description}</View>
         </View>
       </View>
     );
