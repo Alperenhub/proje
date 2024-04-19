@@ -2,6 +2,7 @@ import { View, Text, SafeAreaView, ImageBackground, styles, Pressable } from 're
 import React from 'react'
 import { LinearGradient } from 'expo-linear-gradient';
 import { useNavigation } from '@react-navigation/native';
+import TabNavigator from '../navigation/TabNavigator';
 
 
 const Hello = () => {
@@ -36,7 +37,9 @@ const Hello = () => {
     <Pressable onPress={()=>navigation.navigate('Quiz')} className='bg-[#0300a3] rounded-2xl px-3 w-36 '><Text className='py-2 text-white text-center' style={{fontFamily:'Comfortaa'}}>Ankete Başla</Text></Pressable>
 </View>
 </View>
-
+    <View>
+      <TabNavigator/>
+    </View>
 </View>
     
 
