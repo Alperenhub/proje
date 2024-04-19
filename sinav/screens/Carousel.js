@@ -71,6 +71,15 @@ const Carouselt = () => {
       />
       <View className=' items-center' style={{ justifyContent: 'space-between'}}>
         
+      {/* <Carousel
+        ref={_carousel}
+        data={data}
+        renderItem={_renderItem}
+        sliderWidth={Dimensions.get('window').width}
+        itemWidth={Dimensions.get('window').width}
+        onSnapToItem={index => setActiveDotIndex(index)}
+      /> */}
+
         <Pagination 
           carouselRef={_carousel}
           activeDotIndex={activeDotIndex}
@@ -85,35 +94,7 @@ const Carouselt = () => {
             backgroundColor: 'gray',
           }}
         />
-        {/* <View style={{padding: 15, flexDirection: 'row'}}>
-          <TouchableWithoutFeedback
-            onPress={() => {
-              _carousel.current.snapToItem(activeDotIndex - 1);
-            }}>
-            <View
-              style={{
-                height: 50,
-                width: 50,
-                borderRadius: 25,
-                backgroundColor: 'lightgray',
-                marginEnd: 10,
-              }}
-            />
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback
-            onPress={() => {
-              _carousel.current.snapToItem(activeDotIndex + 1);
-            }}>
-            <View
-              style={{
-                height: 50,
-                width: 50,
-                borderRadius: 25,
-                backgroundColor: 'orange',
-              }}
-            />
-          </TouchableWithoutFeedback>
-        </View> */}
+        
       </View>
     </SafeAreaView>
   );

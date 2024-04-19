@@ -1,80 +1,83 @@
-import { View, Text,TouchableOpacity, KeyboardAvoidingView, ScrollView, Pressable,TextInput, SafeAreaView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, SafeAreaView, KeyboardAvoidingView, ScrollView } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
-const SingUp = () => {
-
-    const [secureTextEntry, setSecureTextEntry] = useState(true);
+const SignUp = ({ setToken }) => {
+  const [gender, setGender] = useState('');
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [birthDate, setBirthDate] = useState('');
+  const [secureTextEntry, setSecureTextEntry] = useState(true);
+  
+  const navigation = useNavigation();
 
   const toggleSecureEntry = () => {
     setSecureTextEntry(!secureTextEntry);
   };
 
+  const handleSignup = async () => {
+    try {
+      const response = await axios.post('https://fakestoreapi.com/users', {
+        gender,
+        name,
+        password,
+        email,
+        birthDate
+      });
+
+      // Assuming the token is returned in the response
+      const token = response.data.token;
+      setToken(token); // Set token here
+
+      navigation.navigate('Kvkk');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <SafeAreaView className='mr-4'>
-      <KeyboardAvoidingView behavior='padding' position='relative'> 
-        <ScrollView>
-      <View className='items-center'>      
-        <View className=' flex flex-col w-[60%]'>
-            <View className='flex-1 '>
-            <Text className='self-start mt-8' style={{fontFamily:'Comfortaa'}}>Cinsiyetinizi seçin</Text>
-            <View className='flex-1 flex-row gap-5 mt-1'>
-                <Pressable  className='bg-white w-[45%] h-[40px] justify-center rounded-lg'><Text className='text-center' style={{fontFamily:'Comfortaa'}}>Kadın</Text></Pressable>
-                <Pressable  className='bg-white w-[45%] h-[40px] justify-center rounded-lg'><Text className=' text-center' style={{fontFamily:'Comfortaa'}}>Erkek</Text></Pressable>
+    <SafeAreaView style={{ flex: 1 }}>
+      <KeyboardAvoidingView behavior='padding' style={{ flex: 1 }}>
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+            <Text style={{ fontFamily: 'Comfortaa', fontSize: 20 }}>Hesap Oluştur</Text>
+            <View style={{ width: '60%', marginTop: 20 }}>
+              <Text style={{ fontFamily: 'Comfortaa', marginBottom: 5 }}>Cinsiyetinizi seçin</Text>
+              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 20 }}>
+                <TouchableOpacity onPress={() => setGender("Kadın")} style={{ backgroundColor: 'white', width: '48%', height: 40, borderRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
+                  <Text style={{ fontFamily: 'Comfortaa' }}>Kadın</Text>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={() => setGender("Erkek")} style={{ backgroundColor: 'white', width: '48%', height: 40, borderRadius: 5, justifyContent: 'center', alignItems: 'center' }}>
+                  <Text style={{ fontFamily: 'Comfortaa' }}>Erkek</Text>
+                </TouchableOpacity>
+              </View>
             </View>
+            <TextInput onChangeText={setEmail} style={{ width: '60%', backgroundColor: 'white', borderRadius: 5, height: 40, marginBottom: 10, padding: 10 }} placeholder="E-mail" />
+            <TextInput onChangeText={setName} style={{ width: '60%', backgroundColor: 'white', borderRadius: 5, height: 40, marginBottom: 10, padding: 10 }} placeholder="Nickname" />
+            <View style={{ width: '60%', flexDirection: 'row', alignItems: 'center', marginBottom: 10 }}>
+              <TextInput onChangeText={setPassword} secureTextEntry={secureTextEntry} style={{ flex: 1, backgroundColor: 'white', borderRadius: 5, height: 40, padding: 10 }} placeholder="Şifre" />
+              <TouchableOpacity onPress={toggleSecureEntry} style={{ padding: 10 }}>
+                <Ionicons name={secureTextEntry ? 'eye-off' : 'eye'} size={24} color="gray" />
+              </TouchableOpacity>
             </View>
-
-            <View className='items-center flex-1 w-[245px] mb-2 mt-2'>
-        <Text className='self-start mb-2' style={{fontFamily:'Comfortaa', fontSize:12}}>E mail</Text>
-        <TextInput className='bg-white rounded-md w-[245px] h-[40px] p-2'/>
-        </View>
-
-            <View className='items-center flex-1 w-[245px] mb-2'>
-        <Text className='self-start mb-2' style={{fontFamily:'Comfortaa', fontSize:12}}>Nickname</Text>
-        <TextInput className='bg-white rounded-md w-[245px] h-[40px] p-2'/>
-        <Text className='self-start p-1' style={{fontFamily:'Comfortaa', fontSize:10}}>Gizliliğinize önem veriyoruz. Lütfen ad soyad girmeden nickname oluşturunuz.</Text>
-        </View>
-
-        <View className='items-center flex-1 w-[245px] mb-2'>
-        <Text className='self-start mb-2' style={{fontFamily:'Comfortaa', fontSize:12}}>Şifre</Text>
-       
-        <View className='flex-row'>
-        <TextInput secureTextEntry={secureTextEntry} className='bg-white rounded-md w-[245px] h-[40px] p-2'/>
-        <TouchableOpacity className='absolute right-1' onPress={toggleSecureEntry} style={{ padding: 10 }}>
-        <Ionicons name={secureTextEntry ? 'eye-off' : 'eye'} size={24} color="gray" />
-      </TouchableOpacity>
-        </View>
-        </View>
-
-        <View className='items-center flex-1 w-[245px] mb-[5%]'>
-        <Text className='self-start mb-2' style={{fontFamily:'Comfortaa', fontSize:12}}>Doğum Tarihi</Text>
-       
-        <View className='flex-row'>
-        <TextInput secureTextEntry={secureTextEntry} className='bg-white rounded-md w-[245px] h-[40px] p-2'/>
-        
-        </View>
-        </View>
-
-        <View className='items-center flex-1 w-[245px] '>
-        <TouchableOpacity className='bg-[#0300a3] rounded-3xl w-[70%]'>
-        <Text className='text-white text-2xl p-2 text-center'>İlerle</Text>
-        </TouchableOpacity>
-            <View className='flex-row mt-1'>
-                <Text style={{fontFamily:'Comfortaa', fontSize: 10 }}>Hesabınız var mı?</Text>
-                    <TouchableOpacity>
-                <Text style={{ color: '#0300a3',fontFamily:'Comfortaa', fontSize: 10, marginLeft: 5 }}>İlerle</Text>
-                    </TouchableOpacity>
+            <TextInput onChangeText={setBirthDate} style={{ width: '60%', backgroundColor: 'white', borderRadius: 5, height: 40, marginBottom: 20, padding: 10 }} placeholder="Doğum Tarihi" />
+            <TouchableOpacity onPress={handleSignup} style={{ backgroundColor: '#0300a3', borderRadius: 20, width: '60%', marginBottom: 20 }}>
+              <Text style={{ fontFamily: 'Comfortaa', fontSize: 20, color: 'white', textAlign: 'center', padding: 10 }}>İlerle</Text>
+            </TouchableOpacity>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Text style={{ fontFamily: 'Comfortaa', fontSize: 12 }}>Hesabınız var mı?</Text>
+              <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+                <Text style={{ fontFamily: 'Comfortaa', fontSize: 12, color: '#0300a3', marginLeft: 5 }}>Giriş Yap</Text>
+              </TouchableOpacity>
             </View>
-        </View>
-
-
-        </View>
-      </View>     
+          </View>
         </ScrollView>
       </KeyboardAvoidingView>
-
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default SingUp
+export default SignUp;
